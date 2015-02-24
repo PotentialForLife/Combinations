@@ -25,12 +25,12 @@ function game(){
 	//----------------------
 	
 	//plant stuff
-	var plant = new Plant();
-	var test = new PlantNode(map[X_FLAG][Y_FLAG],plantEnum.SEEDLING);
+	plant = new Plant();
+	test = new PlantNode(map[X_FLAG][Y_FLAG],plantEnum.SEEDLING);
 	//----------------------
 	
 	//control stuff
-	var control = new Station(map[X_FLAG][Y_FLAG-2]);
+	control = new Station(map[X_FLAG][Y_FLAG-2]);
 	//----------------------
 };
 

@@ -1,15 +1,15 @@
 var img = document.createElement("img");
 
-function creditsMenu(){
-	img.src = "credits_menu copy.png";
+function controlsMenu(){
+	img.src = "controls_menu copy.png";
 	img.onload = function(){
 		ctx.drawImage(img, 0, 0);
 	};
 }
 
-creditsMenu.prototype.type = "credits";
+controlsMenu.prototype.type = "controls";
 
-creditsMenu.prototype.buttonPress = function(e){
+controlsMenu.prototype.buttonPress = function(e){
 	var x = e.clientX;
 	var y = e.clientY;
 	x -= c.offsetLeft;
@@ -20,8 +20,8 @@ creditsMenu.prototype.buttonPress = function(e){
 	}
 };
 
-creditsMenu.prototype.update = function(){
-	img.src = "credits_menu copy.png";
+controlsMenu.prototype.update = function(){
+	img.src = "controls_menu copy.png";
 	img.onload = function(){
 		ctx.drawImage(img, 0, 0);
 	};

@@ -6,9 +6,12 @@ function loadingScreen(){
 		ctx.drawImage(img, 0, 0);
 	};
 	this.imgNum = 0;
+	this.cycle = 0;
 }
 
-loadingScreen.prototype.redrawMenu = function(){
+loadingScreen.prototype.type = "load";
+
+loadingScreen.prototype.update = function(){
 	switch(this.imgNum){
 		case 0:
 			img.src = "load_screen0.5 copy.png";
@@ -73,9 +76,15 @@ loadingScreen.prototype.redrawMenu = function(){
 		case 7:
 			img.src = "load_screen0 copy.png";
 			this.imgNum = 0;
+			this.cycle++;
 			break;
 	}
-	img.onload = function(){
-		ctx.drawImage(img, 0, 0);
-	};
+	if (this.cycle != 2){
+		img.onload = function(){
+			ctx.drawImage(img, 0, 0);
+		};
+	}
+	else{
+		screenManager[screenManager.length] = new game();
+	}
 };

@@ -22,7 +22,13 @@ function seed(base, next, seeds, distance,map){
 			}
 			if( height && (row < map.length*distance || row > map.length-map.length*distance || col < map[0].length*distance || col > map[0].length-map[0].length*distance)){
 				map[row][col].color = TILE_COLORS[next];
-				map[row][col].h = next;
+				map[row][col].realcolor = TILE_COLORS[next];
+				if (next == 5 || next == 6){
+					map[row][col].h = base;
+					if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
+				} else{
+					map[row][col].h = next;
+				}
 			}
 		}
 	}
@@ -34,12 +40,20 @@ function seed(base, next, seeds, distance,map){
 			col = Math.floor ((Math.random() * map[0].length));
 		}
 		map[row][col].color = TILE_COLORS[next];
-		map[row][col].height = next;
+		map[row][col].realcolor = TILE_COLORS[next];
+		if (next == 5 || next == 6){
+			map[row][col].h = base;
+			if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
+		} else{
+			map[row][col].h = next;
+		}
 	}
 }
 
 function build(base, next, chance, seeds, distance, map){
 	seed(base, next, seeds, distance,map);
+	var next = next;
+	if (next == 5 || next == 6){next = base;}
 	for (x = 0; x < map.length; x++ ) {
 		for ( y = 1; y < map[x].length-2; y++ ) {
      		var num = Math.floor ( Math.random() * 100);
@@ -47,15 +61,27 @@ function build(base, next, chance, seeds, distance, map){
         		 if(num <= chance){
         	 		map[x][y-1].color = TILE_COLORS[next];
         	 		map[x][y-1].h = next;
+        	 		map[x][y-1].realcolor = TILE_COLORS[next];
         	 		map[x][y+1].color = TILE_COLORS[next];
         	 		map[x][y+1].h = next;
+        	 		map[x][y+1].realcolor = TILE_COLORS[next];
+        	 		if (next == 5){map[x][y-1].type = "mineral";}
+        	 		if (next == 6){map[x][y-1].type = "water";}
+        	 		if (next == 5){map[x][y+1].type = "mineral";}
+        	 		if (next == 6){map[x][y+1].type = "water";}
         	 		if(x > 0){
         	 			map[x-1][y].color = TILE_COLORS[next];
         	 			map[x-1][y].h = next;
+        	 			map[x-1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x-1][y].type = "mineral";}
+        	 			if (next == 6){map[x-1][y].type = "water";}
         	 		}
         	 		if(x != map.length-1){
         	 			map[x+1][y].color = TILE_COLORS[next];
         	 			map[x+1][y].h = next;
+        	 			map[x+1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x+1][y].type = "mineral";}
+        	 			if (next == 6){map[x+1][y].type = "water";}
         	 		}
         	 	}
          	}
@@ -69,15 +95,27 @@ function build(base, next, chance, seeds, distance, map){
         		 if(num <= chance){
         	 		map[x][y-1].color = TILE_COLORS[next];
         	 		map[x][y-1].h = next;
+        	 		map[x][y-1].realcolor = TILE_COLORS[next];
         	 		map[x][y+1].color = TILE_COLORS[next];
         	 		map[x][y+1].h = next;
+        	 		map[x][y+1].realcolor = TILE_COLORS[next];
+        	 		if (next == 5){map[x][y-1].type = "mineral";}
+        	 		if (next == 6){map[x][y-1].type = "water";}
+        	 		if (next == 5){map[x][y+1].type = "mineral";}
+        	 		if (next == 6){map[x][y+1].type = "water";}
         	 		if(x > 0){
         	 			map[x-1][y].color = TILE_COLORS[next];
         	 			map[x-1][y].h = next;
+        	 			map[x-1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x-1][y].type = "mineral";}
+        	 			if (next == 6){map[x-1][y].type = "water";}
         	 		}
         	 		if(x != map.length-1){
         	 			map[x+1][y].color = TILE_COLORS[next];
         	 			map[x+1][y].h = next;
+        	 			map[x+1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x+1][y].type = "mineral";}
+        	 			if (next == 6){map[x+1][y].type = "water";}
         	 		}	
         		 }
         	 }
@@ -91,15 +129,27 @@ function build(base, next, chance, seeds, distance, map){
         		if(num <= chance){
         	 		map[x][y-1].color = TILE_COLORS[next];
         	 		map[x][y-1].h = next;
+        	 		map[x][y-1].realcolor = TILE_COLORS[next];
         	 		map[x][y+1].color = TILE_COLORS[next];
         	 		map[x][y+1].h = next;
+        	 		map[x][y+1].realcolor = TILE_COLORS[next];
+        	 		if (next == 5){map[x][y-1].type = "mineral";}
+        	 		if (next == 6){map[x][y-1].type = "water";}
+        	 		if (next == 5){map[x][y+1].type = "mineral";}
+        	 		if (next == 6){map[x][y+1].type = "water";}
         	 		if(x > 0){
         	 			map[x-1][y].color = TILE_COLORS[next];
         	 			map[x-1][y].h = next;
+        	 			map[x-1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x-1][y].type = "mineral";}
+        	 			if (next == 6){map[x-1][y].type = "water";}
         	 		}
         	 		if(x != map.length-1){
         	 			map[x+1][y].color = TILE_COLORS[next];
         	 			map[x+1][y].h = next;
+        	 			map[x+1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x+1][y].type = "mineral";}
+        	 			if (next == 6){map[x+1][y].type = "water";}
         	 		}
         	 	}
          	}
@@ -113,15 +163,27 @@ function build(base, next, chance, seeds, distance, map){
         		 if(num <= chance){
         	 		map[x][y-1].color = TILE_COLORS[next];
         	 		map[x][y-1].h = next;
+        	 		map[x][y-1].realcolor = TILE_COLORS[next];
         	 		map[x][y+1].color = TILE_COLORS[next];
         	 		map[x][y+1].h = next;
+        	 		map[x][y+1].realcolor = TILE_COLORS[next];
+        	 		if (next == 5){map[x][y-1].type = "mineral";}
+        	 		if (next == 6){map[x][y-1].type = "water";}
+        	 		if (next == 5){map[x][y+1].type = "mineral";}
+        	 		if (next == 6){map[x][y+1].type = "water";}
         	 		if(x > 0){
         	 			map[x-1][y].color = TILE_COLORS[next];
         	 			map[x-1][y].h = next;
+        	 			map[x-1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x-1][y].type = "mineral";}
+        	 			if (next == 6){map[x-1][y].type = "water";}
         	 		}
         	 		if(x != map.length-1){
         	 			map[x+1][y].color = TILE_COLORS[next];
         	 			map[x+1][y].h = next;
+        	 			map[x+1][y].realcolor = TILE_COLORS[next];
+        	 			if (next == 5){map[x+1][y].type = "mineral";}
+        	 			if (next == 6){map[x+1][y].type = "water";}
         	 		}
         	 	}
          	}

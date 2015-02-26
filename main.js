@@ -43,8 +43,10 @@ keyspressed[DOWN_KEY] = false;
 var TILE_COLORS = [ '#CC5200', '#E65C00', '#FF6600', '#FF7519', '#FF8533', '#FF9900', '#80FFFF', '#FFC299', '#FF0000'];
 
 var plant;
-var test;
+var growTiles = [];
+var growSourceTile;
 var control;
+var ui;
 
 document.addEventListener('keydown',keyDown,false);
 document.addEventListener('keyup',keyUp,false);

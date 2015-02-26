@@ -27,19 +27,22 @@
  */
 var plantEnum = {SEEDLING: "seedling", SAPLING: "sapling", TREE: "tree", ROOT: "root"};
 
-function Plant(){
-	
+function Plant(startingTile){
+	//this.stem = new PlantNode(startingTile, plantEnum.SEEDLING);
+	this.stem = new PlantNode(startingTile, plantEnum.TREE);
 };
 
-//Plant.prototype.stem = new PlantNode(placeHolder, plantEnum.SEEDLING); //replace placeHolder with center tile (or whatever origin tile is desired) 
+Plant.prototype.stem;
 Plant.prototype.lvl = 0;
 Plant.prototype.exp = 0;
-Plant.prototype.expMax = new Array(); //could make it multiplicative depending on level instead of being array
-Plant.prototype.growthPoints = 0;
+Plant.prototype.expMax = []; //could make it multiplicative depending on level instead of being array
+Plant.prototype.growthPoints = 3;
 
 function PlantNode(nodeTile, nodeType){
+	console.log("making PlantNode");
 	this.tile = nodeTile;//hex
 	this.type = nodeType;
+	this.tile.plant = this;
 	this.tile.type = "plant";
 	this.tile.color = "green";
 	this.tile.atmosphere = true;
@@ -47,6 +50,7 @@ function PlantNode(nodeTile, nodeType){
 
 PlantNode.prototype.tile = null;
 PlantNode.prototype.type = plantEnum.ROOT;
+PlantNode.prototype.parent = null;
 PlantNode.prototype.children = new Array(); //could reference neighboring tiles instead of just children (change name if so)
 
 
@@ -56,32 +60,28 @@ PlantNode.prototype.children = new Array(); //could reference neighboring tiles 
  * @param {Object} parent: branch or root to be grown; if branch, root is created; if root, turns to branch and root is created
  * @param {Object} tile: tile on which new root is created
  */
-
-Plant.prototype.grow = function(parent, tile){
-	if(parent == plantEnum.ROOT){
-		//light up only surrounding tiles with no resources or PlantNodes attached
-		//ask for mouse click on lit up tile
-		--growthPoints;
-		parent.type = plantEnum.TREE;
-		//newRoot = new PlantNode(clickedTile);
-		//add new root to parent's children
-		//attach node to tile in some way
+Plant.prototype.grow = function(parentNode, tile){
+	if(parentNode.type == plantEnum.ROOT){
+		--this.growthPoints;
+		parentNode.type = plantEnum.TREE;
+		newRoot = new PlantNode(tile, plantEnum.ROOT);
+		newRoot.parent = parentNode;
+		parentNode.children.push(newRoot);
+		tile.plant = newRoot;
 	}
-	else if(parent.type == plantEnum.TREE){
-		//light up only surrounding tiles with no resources or PlantNodes attached
-		//ask for mouse click on lit up tile
-		--growthPoints;
+	else if(parentNode.type == plantEnum.TREE){
+		--this.growthPoints;
 		//reduce amount of enzyme remaining
-		//newRoot = new PlantNode(clickedTile);
-		//add new root to parent's children
-		//attach node to tile in some way
+		newRoot = new PlantNode(tile, plantEnum.ROOT);
+		newRoot.parent = parentNode;
+		parentNode.children.push(newRoot);
+		tile.plant = newRoot;
 	}
 };
 
 /**
  * Increases 'lvl' by 1, increases 'expMax,' and wraps extra 'exp' around
  */
-
 Plant.prototype.lvlUp = function(){
 	switch(stem.type){
 		case plantEnum.SEEDLING:
@@ -102,9 +102,31 @@ Plant.prototype.lvlUp = function(){
 /**
  * calls 'lvlUp' if 'expMax' has been reached
  */
-
 Plant.prototype.update = function(){
 	if(exp > expMax){
 		this.lvlUp();
 	}	
 };
+
+/**
+* Check whether a given tile can contain a new plantNode
+* 
+* @param {hex} tile: hex tile checked for ability to contain new plantNode
+*/
+function checkTileGrowable(tile){
+	if(TILE_COLORS.indexOf(tile.color) > -1){
+		tile.color = 'green';
+		growTiles.push(tile);
+	}
+}
+	
+/**
+* Grows a new plantNode and separates the corresponding tile from the array of non-chosen tiles
+*/
+function growPlant(){
+	plant.grow(growSourceTile.plant, map[X_FLAG][Y_FLAG]);
+	for(var numTile = 0; numTile < growTiles.length; ++numTile){
+		if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y)
+			growTiles.splice(numTile, 1);
+	}
+}

@@ -1,6 +1,7 @@
 function Station(hex){
 	hex.type = "control";
 	hex.color = "grey";
+	hex.realcolor = "grey";
 };
 Station.prototype.Water =  500;
 Station.prototype.Minerals = 500;
@@ -16,3 +17,4 @@ Station.prototype.PlayerEnergy = 100;
 Station.prototype.PlayerEnergyLossRate = 1;
 Station.prototype.AtmosphereTiles = 1;
 Station.prototype.Growing = false;
+Station.prototype.HoldingGrow = false;

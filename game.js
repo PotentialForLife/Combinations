@@ -25,8 +25,7 @@ function game(){
 	//----------------------
 	
 	//plant stuff
-	plant = new Plant();
-	test = new PlantNode(map[X_FLAG][Y_FLAG],plantEnum.SEEDLING);
+	plant = new Plant(map[X_FLAG][Y_FLAG]);	
 	//----------------------
 	
 	//control stuff
@@ -41,11 +40,27 @@ game.prototype.update = function(){
 	ctx.fillStyle = "black";
 	ctx.strokeStyle = "black";
 	player.draw(CAM_WIDTH/2,CAM_HEIGHT/2);
+	//ui.draw();
 	ctx.fillStyle = "white";
 	ctx.font = "20px Georgia";
 	ctx.fillText("Water : " + control.Water, 10,25);
 	ctx.fillText("Minerals : " + control.Minerals, 10,45);
 	ctx.fillText("Enzymes : " + control.Enzyme, 10,65);
+	if(control.Growing){
+		for(var numTile = 0; numTile < growTiles.length; ++numTile){
+			if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y){
+				growPlant();
+				player.onPlant = true;
+				break;
+			}
+		}
+		growSourceTile = null;
+		while(growTiles.length != 0){
+			growTiles[0].color = growTiles[0].realcolor;
+			growTiles.shift();
+		}
+		control.Growing = false;
+	}
 };
 
 game.prototype.type = "game";
@@ -70,12 +85,43 @@ function keyDown(e){
 				player.down = true;
 				break;
 			case 32:
-				if(player.onPlant == true)map[X_FLAG][Y_FLAG].color = 'red';
-				if(player.inControl == true){
-					screenManager[screenManager.length] = new stationMenu();
-					map[X_FLAG][Y_FLAG].color = 'red';
+				if(player.onPlant){
+					if(plant.growthPoints > 0){
+						control.HoldingGrow = true;
+						growSourceTile = map[X_FLAG][Y_FLAG];
+						if ((Y_FLAG%2)){
+							checkTileGrowable(map[X_FLAG+1][Y_FLAG+1]);
+							checkTileGrowable(map[X_FLAG+1][Y_FLAG-1]);
+						}
+						else{
+							checkTileGrowable(map[X_FLAG-1][Y_FLAG+1]);
+							checkTileGrowable(map[X_FLAG-1][Y_FLAG-1]);
+						}
+						checkTileGrowable(map[X_FLAG][Y_FLAG-2]);
+						checkTileGrowable(map[X_FLAG][Y_FLAG+2]);
+						checkTileGrowable(map[X_FLAG][Y_FLAG-1]);
+						checkTileGrowable(map[X_FLAG][Y_FLAG+1]);
+					}
 				}
-				break;
+				if(player.inControl){
+					screenManager[screenManager.length] = new stationMenu();
+					break;
+				}
+            	if(player.onWater == true && player.capacity < player.capacityMax && keybuf == false && map[X_FLAG][Y_FLAG].resource > 0){
+					keybuf = true;
+					player.capacity+=10;
+					player.capacityMax+=10;
+					player.hasMinerals+=10;
+					map[X_FLAG][Y_FLAG].resource -= 10;
+				}
+				if(player.onMinerals == true && player.capacity < player.capacityMax && keybuf == false && map[X_FLAG][Y_FLAG].resource > 0){
+					keybuf = true;
+					player.capacity+=10;
+					player.capacityMax+=10;
+					player.hasWater+=10;
+					map[X_FLAG][Y_FLAG].resource -= 10;
+				}
+				break;			
 			case 80:
 				screenManager[screenManager.length] = new pauseMenu();
 				break;
@@ -85,6 +131,11 @@ function keyDown(e){
 	}
 };
 
+/**
+* Handles 'keyup' events
+* 
+* @param {event} e: the keyup event being handled
+*/
 function keyUp(e){
 	switch (e.keyCode){
 		case 68:
@@ -104,14 +155,21 @@ function keyUp(e){
 			player.down = false;
 			break;
 		case 32:
-			if(player.onPlant == true)map[X_FLAG][Y_FLAG].color = 'green';
+			if(control.HoldingGrow){
+				control.Growing = true;
+				control.HoldingGrow = false;
+			} 
 			if(player.inControl == true)map[X_FLAG][Y_FLAG].color = 'grey';
+            keybuf = false;
 			break;
 		default:
 			break;
-	}
-};
+		}
+}
 	
+/**
+* Controls viewable area of map
+*/
 function cam_map(){
 	ctx.fillStyle = "white";
 	ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -133,6 +191,12 @@ function cam_map(){
 	}
 };
 	
+/**
+* Finds the coordinates of the player on the map
+* 
+* @param {2D Array} map: 2-dimensional Array of the hex tiles making up the map
+ * @param {Player} player: ...the player object
+*/
 function find_player(map,player){
 	if (X_FLAG == -1 && Y_FLAG == -1){//brute force starting check
 		for(x = 0;x < map.length;x++){

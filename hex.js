@@ -20,6 +20,7 @@ Hex.prototype.type = 0;
 Hex.prototype.resource = 200;
 Hex.prototype.hasPlant = false;
 Hex.prototype.atmosphere = false;
+Hex.prototype.plant = null;
 Hex.prototype.paint = function(h,xoffset,yoffset){
 	ctx.fillStyle = this.color;
 	ctx.strokeStyle = this.bordercolor;
@@ -98,7 +99,7 @@ Hex.prototype.collision = function(x,y,player){
 				player.height = this.h;
 				console.log(this.type);
 				if (this.type == 'plant'){player.onPlant = true;}else{player.onPlant = false;}
-				if (this.type == 'ice'){player.onWater = true;}else{player.onWater = false;}
+				if (this.type == 'water'){player.onWater = true;}else{player.onWater = false;}
 				if (this.type == 'mineral'){player.onMinerals = true;}else{player.onMinerals = false;}
 				if (this.atmosphere){control.PlayerEnergy = 100;}else{control.PlayerEenergy-=control.PlayerEnergyLossRate;}
 				if (this.type == 'control'){

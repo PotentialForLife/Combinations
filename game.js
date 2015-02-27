@@ -14,7 +14,7 @@ function game(){
 	build(1, 2, 55, 150, 1, map);
 	build(2, 3, 55, 150, 1, map);
 	build(3, 4, 55, 150, 1, map);
-	build(4, 5, 5, 500, 1, map);
+	build(-1, 5, 50, 5000, 1, map);
 	build(3, 5, 0, 500, 1, map);
 	build(0, 6, 5, 200, 1, map);
 	build(1, 6, 0, 200, 1, map);
@@ -23,7 +23,7 @@ function game(){
 	build(-1, 7, 25, 1000000, .03, map);
 	//build(4, 8, 0,1 , .3, map);
 	//----------------------
-	
+
 	//plant stuff
 	plant = new Plant(map[X_FLAG][Y_FLAG]);	
 	//----------------------
@@ -46,6 +46,9 @@ game.prototype.update = function(){
 	ctx.fillText("Water : " + control.Water, 10,25);
 	ctx.fillText("Minerals : " + control.Minerals, 10,45);
 	ctx.fillText("Enzymes : " + control.Enzyme, 10,65);
+	ctx.fillText("Robo Water : " + player.hasWater, 10,85);
+	ctx.fillText("Robo Minerals : " + player.hasMinerals, 10,105);
+	ctx.fillText("exp : " + plant.exp + " / " + plant.expMax, 10, 125)
 	if(control.Growing){
 		for(var numTile = 0; numTile < growTiles.length; ++numTile){
 			if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y){
@@ -62,6 +65,8 @@ game.prototype.update = function(){
 		control.Growing = false;
 	}
 };
+
+game.prototype.buttonPress = function(){};
 
 game.prototype.type = "game";
 
@@ -86,7 +91,7 @@ function keyDown(e){
 				break;
 			case 32:
 				if(player.onPlant){
-					if(plant.growthPoints > 0){
+					if((plant.growthPoints > 0 && map[X_FLAG][Y_FLAG].plant.type == plantEnum.ROOT) || (control.Enzyme > 0 && map[X_FLAG][Y_FLAG].plant.type == plantEnum.TREE)){
 						control.HoldingGrow = true;
 						growSourceTile = map[X_FLAG][Y_FLAG];
 						if ((Y_FLAG%2)){
@@ -111,14 +116,14 @@ function keyDown(e){
 					keybuf = true;
 					player.capacity+=10;
 					player.capacityMax+=10;
-					player.hasMinerals+=10;
+					player.hasWater+=10;
 					map[X_FLAG][Y_FLAG].resource -= 10;
 				}
 				if(player.onMinerals == true && player.capacity < player.capacityMax && keybuf == false && map[X_FLAG][Y_FLAG].resource > 0){
 					keybuf = true;
 					player.capacity+=10;
 					player.capacityMax+=10;
-					player.hasWater+=10;
+					player.hasMinerals+=10;
 					map[X_FLAG][Y_FLAG].resource -= 10;
 				}
 				break;			

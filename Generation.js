@@ -21,10 +21,12 @@ function seed(base, next, seeds, distance,map){
 				height = (map[row][col].color == TILE_COLORS[base]);
 			}
 			if( height && (row < map.length*distance || row > map.length-map.length*distance || col < map[0].length*distance || col > map[0].length-map[0].length*distance)){
+				var h = map[row][col].h;
 				map[row][col].color = TILE_COLORS[next];
 				map[row][col].realcolor = TILE_COLORS[next];
 				if (next == 5 || next == 6){
-					map[row][col].h = base;
+					// Glitches if -1 is used. Base is negative making it only possible to reach from 0 layer.
+					map[row][col].h = h;
 					if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
 				} else{
 					map[row][col].h = next;
@@ -39,10 +41,11 @@ function seed(base, next, seeds, distance,map){
 			row = Math.floor ((Math.random() * map.length));
 			col = Math.floor ((Math.random() * map[0].length));
 		}
+		var h = map[row][col].h; 
 		map[row][col].color = TILE_COLORS[next];
 		map[row][col].realcolor = TILE_COLORS[next];
 		if (next == 5 || next == 6){
-			map[row][col].h = base;
+			map[row][col].h = h;
 			if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
 		} else{
 			map[row][col].h = next;

@@ -35,8 +35,9 @@ function Plant(startingTile){
 Plant.prototype.stem;
 Plant.prototype.lvl = 0;
 Plant.prototype.exp = 0;
-Plant.prototype.expMax = []; //could make it multiplicative depending on level instead of being array
-Plant.prototype.growthPoints = 3;
+Plant.prototype.expMax = 100;
+Plant.prototype.growthPoints = 0;
+Plant.prototype.numRoots = 0;
 
 function PlantNode(nodeTile, nodeType){
 	console.log("making PlantNode");
@@ -44,7 +45,10 @@ function PlantNode(nodeTile, nodeType){
 	this.type = nodeType;
 	this.tile.plant = this;
 	this.tile.type = "plant";
-	this.tile.color = "green";
+	if(this.type == plantEnum.TREE)
+		this.tile.color = "green";
+	else
+		this.tile.color = "darkgreen";
 	this.tile.atmosphere = true;
 };
 
@@ -64,18 +68,19 @@ Plant.prototype.grow = function(parentNode, tile){
 	if(parentNode.type == plantEnum.ROOT){
 		--this.growthPoints;
 		parentNode.type = plantEnum.TREE;
+		parentNode.tile.color = 'green';
 		newRoot = new PlantNode(tile, plantEnum.ROOT);
 		newRoot.parent = parentNode;
 		parentNode.children.push(newRoot);
 		tile.plant = newRoot;
 	}
 	else if(parentNode.type == plantEnum.TREE){
-		--this.growthPoints;
-		//reduce amount of enzyme remaining
+		--control.Enzyme;
 		newRoot = new PlantNode(tile, plantEnum.ROOT);
 		newRoot.parent = parentNode;
 		parentNode.children.push(newRoot);
 		tile.plant = newRoot;
+		++this.numRoots;
 	}
 };
 
@@ -94,7 +99,7 @@ Plant.prototype.lvlUp = function(){
 	}
 	
 	var extraExp = exp - expMax;
-	expMax *= 1.5;
+	expMax *= 1.05;
 	exp = extraExp;
 	++lvl;
 };
@@ -115,7 +120,7 @@ Plant.prototype.update = function(){
 */
 function checkTileGrowable(tile){
 	if(TILE_COLORS.indexOf(tile.color) > -1){
-		tile.color = 'green';
+		tile.color = 'greenyellow';
 		growTiles.push(tile);
 	}
 }

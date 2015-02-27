@@ -5,7 +5,7 @@ function Station(hex){
 };
 Station.prototype.Water =  500;
 Station.prototype.Minerals = 500;
-Station.prototype.Enzyme = 2;
+Station.prototype.Enzyme = 0;
 Station.prototype.EnzymeBuildUp;
 Station.prototype.EnzymeBuildRate;
 Station.prototype.WaterUsageRate = 1; //per increment, like 20 seconds
@@ -18,3 +18,5 @@ Station.prototype.PlayerEnergyLossRate = 1;
 Station.prototype.AtmosphereTiles = 1;
 Station.prototype.Growing = false;
 Station.prototype.HoldingGrow = false;
+Station.prototype.fertilizer = 0;
+Station.prototype.nitrates = 0;

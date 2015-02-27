@@ -19,13 +19,20 @@ refineMenu.prototype.buttonPress = function(e){
 		screenManager.splice((screenManager.length - 1), 1);
 		screenManager.splice((screenManager.length - 1), 1);
 	}
-	if ((x >= 150) && (x <= 382) && (y >= 125) && (y <= 193)){ //ice->water
+	if ((x >= 153) && (x <= 389) && (y >= 193) && (y <= 264)){ //minerals->fertilizer
+		if(control.Minerals != 0){
+			control.fertilizer += 1;
+			control.Minerals -= 10;
+		}
+		console.log("fertilizer");
 		//do something
 	}
-	if ((x >= 150) && (x <= 382) && (y >= 268) && (y <= 336)){ //minerals->fertilizer
-		//do something
-	}
-	if ((x >= 150) && (x <= 382) && (y >= 412) && (y <= 480)){ //minerals->nitrates
+	if ((x >= 153) && (x <= 389) && (y >= 334) && (y <= 407)){ //minerals->nitrates
+		if(control.Minerals != 0){
+			control.nitrates += 1;
+			control.Minerals -= 10;
+		}
+		console.log("nitrates");
 		//do something
 	}
 };

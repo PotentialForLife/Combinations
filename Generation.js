@@ -129,7 +129,7 @@ function reverseSqrSeed(base, next, seeds, distance, map){
 
 
 function build(base, next, chance, seeds, distance, map){
-	seed(base, next, seeds, distance,map);
+	seed(base, next, seeds, map);
 	var next = next;
 	if (next == 5 || next == 6){next = base;}
 	for (x = 0; x < map.length; x++ ) {

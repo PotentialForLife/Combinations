@@ -20,7 +20,8 @@ function game(){
 	build(1, 6, 0, 200, 1, map);
 	build(2, 6, 0, 100, 1, map);
 	build(2, 5, 0, 150, 1, map);
-	build(-1, 7, 25, 1000000, .03, map);
+	sqrSeed(-1, 7, 1000000, .03, map);
+	build(-1, 7, 25, 0, 1, map);
 	//build(4, 8, 0,1 , .3, map);
 	//----------------------
 
@@ -49,6 +50,9 @@ game.prototype.update = function(){
 	ctx.fillText("Robo Water : " + player.hasWater, 10,85);
 	ctx.fillText("Robo Minerals : " + player.hasMinerals, 10,105);
 	ctx.fillText("exp : " + plant.exp + " / " + plant.expMax, 10, 125);
+	ctx.fillText("Fertilizer : " + control.fertilizer, 10,145);
+	ctx.fillText("Nitrates : " + control.nitrates, 10,165);
+	ctx.fillText("Growth Points : " + plant.growthPoints, 10,185);
 	if(control.Growing){
 		for(var numTile = 0; numTile < growTiles.length; ++numTile){
 			if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y){

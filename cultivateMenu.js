@@ -21,10 +21,16 @@ cultivateMenu.prototype.buttonPress = function(e){
 	}
 	if ((x >= 144) && (x <= 371) && (y >= 143) && (y <= 212)){ //cultivate plant
 		console.log("plant");
-		//do something
+		if(control.Water >= 10 && control.fertilizer != 0){
+			control.Water -= 10;
+			control.fertilizer -= 1;
+			console.log(control.EXP);
+			plant.exp += 10;
+			plant.update();
+		}
 	}
 	if ((x >= 144) && (x <= 371) && (y >= 379) && (y <= 446)){ //cultivate enzyme
-		if(control.Water != 0 && control.nitrates != 0){
+		if(control.Water >= 10 && control.nitrates != 0){
 			control.Enzyme += 1;
 			control.Water -= 10;
 			control.nitrates -= 1;

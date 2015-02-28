@@ -48,7 +48,7 @@ game.prototype.update = function(){
 	ctx.fillText("Enzymes : " + control.Enzyme, 10,65);
 	ctx.fillText("Robo Water : " + player.hasWater, 10,85);
 	ctx.fillText("Robo Minerals : " + player.hasMinerals, 10,105);
-	ctx.fillText("exp : " + plant.exp + " / " + plant.expMax, 10, 125)
+	ctx.fillText("exp : " + plant.exp + " / " + plant.expMax, 10, 125);
 	if(control.Growing){
 		for(var numTile = 0; numTile < growTiles.length; ++numTile){
 			if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y){

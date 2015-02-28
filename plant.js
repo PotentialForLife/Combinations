@@ -88,27 +88,27 @@ Plant.prototype.grow = function(parentNode, tile){
  * Increases 'lvl' by 1, increases 'expMax,' and wraps extra 'exp' around
  */
 Plant.prototype.lvlUp = function(){
-	switch(stem.type){
+	switch(this.stem.type){
 		case plantEnum.SEEDLING:
-			stem.type = plantEnum.SAPLING;
+			this.stem.type = plantEnum.SAPLING;
 			break;
 		case plantEnum.SAPLING:
-			stem.type = plantEnum.TREE;
+			this.stem.type = plantEnum.TREE;
 		default:
-			++growthPoints;
+			this.growthPoints += this.numRoots;
 	}
 	
-	var extraExp = exp - expMax;
-	expMax *= 1.05;
-	exp = extraExp;
-	++lvl;
+	var extraExp = this.exp - this.expMax;
+	this.expMax = Math.floor(this.expMax * 1.05);
+	this.exp = extraExp;
+	++this.lvl;
 };
 
 /**
  * calls 'lvlUp' if 'expMax' has been reached
  */
 Plant.prototype.update = function(){
-	if(exp > expMax){
+	if(this.exp >= this.expMax){
 		this.lvlUp();
 	}	
 };

@@ -1,6 +1,7 @@
 //CONSTS
 var TILE_COLORS = [ '#CC5200', '#E65C00', '#FF6600', '#FF7519', '#FF8533', '#FF9900', '#80FFFF', '#FFC299', '#FF0000'];
-
+var rocksimg = document.createElement("img");
+rocksimg.src = "barren_space_icon copy.png";
 /*var VIEW_WIDTH = 1000;
 var VIEW_HEIGHT = 1000;
 var VIEW_TILE_WIDTH = Math.floor ( VIEW_WIDTH / TILE_SIZE );
@@ -24,11 +25,11 @@ function seed(base, next, seeds, map){
 				var h = map[row][col].h;
 				map[row][col].color = TILE_COLORS[next];
 				map[row][col].realcolor = TILE_COLORS[next];
-				if (next == 5 || next == 6){
+				if (next == 5 || next == 6){	
 					map[row][col].h = h;
-					if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
-			} else{
-				map[row][col].h = next;
+					if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
+				} else{
+					map[row][col].h = next;
 				}
 			}
 		}
@@ -55,7 +56,7 @@ function sqrSeed(base, next, seeds, distance, map){
 				if (next == 5 || next == 6){
 					// Glitches if -1 is used. Base is negative making it only possible to reach from 0 layer.
 					map[row][col].h = h;
-					if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
+					if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
 				} else{
 					map[row][col].h = next;
 				}
@@ -74,7 +75,7 @@ function sqrSeed(base, next, seeds, distance, map){
 		map[row][col].realcolor = TILE_COLORS[next];
 		if (next == 5 || next == 6){
 			map[row][col].h = h;
-			if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
+			if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
 		} else{
 			map[row][col].h = next;
 		}
@@ -101,7 +102,7 @@ function reverseSqrSeed(base, next, seeds, distance, map){
 				if (next == 5 || next == 6){
 					// Glitches if -1 is used. Base is negative making it only possible to reach from 0 layer.
 					map[row][col].h = h;
-					if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
+					if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
 				} else{
 					map[row][col].h = next;
 				}
@@ -120,7 +121,7 @@ function reverseSqrSeed(base, next, seeds, distance, map){
 		map[row][col].realcolor = TILE_COLORS[next];
 		if (next == 5 || next == 6){
 			map[row][col].h = h;
-			if (next == 5){map[row][col].type = "mineral";}else{map[row][col].type = "water";}
+			if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
 		} else{
 			map[row][col].h = next;
 		}
@@ -131,10 +132,15 @@ function reverseSqrSeed(base, next, seeds, distance, map){
 function build(base, next, chance, seeds, distance, map){
 	seed(base, next, seeds, map);
 	var next = next;
+	var savecolor = next;
 	if (next == 5 || next == 6){next = base;}
 	for (x = 0; x < map.length; x++ ) {
 		for ( y = 1; y < map[x].length-2; y++ ) {
      		var num = Math.floor ( Math.random() * 100);
+     		if(savecolor < 5){
+     			if (1>(Math.random()*500))
+     				map[x][y].image = rocksimg;
+     		}
         	if(map[x][y].color == TILE_COLORS[next]){
         		 if(num <= chance){
         	 		map[x][y-1].color = TILE_COLORS[next];

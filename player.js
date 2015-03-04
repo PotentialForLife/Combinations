@@ -3,7 +3,18 @@ var canvas =document.getElementById('canvas');
 var ctx = canvas.getContext("2d");
 var w = 400;
 var h = 400;
-
+var playeridleleftimg = document.createElement("img");
+playeridleleftimg.src = "robot_idle_left copy.png";
+var playeridlerightimg = document.createElement("img");
+playeridlerightimg.src = "robot_idle_left copy.png";
+var playermoveleftimg = document.createElement("img");
+playermoveleftimg.src = "robot_idle_left copy.png";
+var playermoverightimg = document.createElement("img");
+playermoverightimg.src = "robot_idle_left copy.png";
+var playeridleleftimg = document.createElement("img");
+playeridleleftimg.src = "robot_idle_left copy.png";
+var playeridleleftimg = document.createElement("img");
+playeridleleftimg.src = "robot_idle_left copy.png";
 function Player(){	
 }
 
@@ -26,6 +37,7 @@ Player.prototype.onWater = false;
 Player.prototype.onMinerals = false;
 Player.prototype.hasMinerals = 0;
 Player.prototype.hasWater = 0;
+Player.prototype.image = 
 
 Player.prototype.draw = function(x,y){
 	var dx = x - 2;

@@ -26,6 +26,10 @@
  * Basically,bring up a menu and interact that way
  */
 var plantEnum = {SEEDLING: "seedling", SAPLING: "sapling", TREE: "tree", ROOT: "root"};
+var hextreeimg = document.createElement("img");
+hextreeimg.src = "plant_final_stage_icon copy.png";
+var hexsproutimg = document.createElement("img");
+hexsproutimg.src = "plant_first_stage_icon copy.png";
 
 function Plant(startingTile){
 	//this.stem = new PlantNode(startingTile, plantEnum.SEEDLING);
@@ -45,10 +49,13 @@ function PlantNode(nodeTile, nodeType){
 	this.type = nodeType;
 	this.tile.plant = this;
 	this.tile.type = "plant";
-	if(this.type == plantEnum.TREE)
+	if(this.type == plantEnum.TREE){
 		this.tile.color = "green";
-	else
+		this.tile.image = hextreeimg;
+	}else{
 		this.tile.color = "darkgreen";
+		this.tile.image = hexsproutimg;
+	}
 	this.tile.atmosphere = true;
 };
 
@@ -69,6 +76,7 @@ Plant.prototype.grow = function(parentNode, tile){
 		--this.growthPoints;
 		parentNode.type = plantEnum.TREE;
 		parentNode.tile.color = 'green';
+		parentNode.tile.image = hextreeimg;
 		newRoot = new PlantNode(tile, plantEnum.ROOT);
 		newRoot.parent = parentNode;
 		parentNode.children.push(newRoot);

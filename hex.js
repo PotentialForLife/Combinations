@@ -1,5 +1,9 @@
 var canvas =document.getElementById('canvas');
 var ctx = canvas.getContext("2d");
+var hexiceimg = document.createElement("img");
+hexiceimg.src = "ice_crystal_icon copy.png";
+var hexmineralsimg = document.createElement("img");
+hexmineralsimg.src = "mineral_icon copy.png";
 function Hex(x,y,cw,color,h){
 	this.x = x;
 	this.y = y;
@@ -14,6 +18,7 @@ function Hex(x,y,cw,color,h){
 	this.color = color;
 	this.realcolor = color;
 	this.bordercolor = "white";
+	this.imagescale = (.7+Math.random()*.3);
 }
 
 Hex.prototype.type = 0;
@@ -21,6 +26,7 @@ Hex.prototype.resource = 200;
 Hex.prototype.hasPlant = false;
 Hex.prototype.atmosphere = false;
 Hex.prototype.plant = null;
+Hex.prototype.image = 0;
 Hex.prototype.paint = function(h,xoffset,yoffset){
 	ctx.fillStyle = this.color;
 	ctx.strokeStyle = this.bordercolor;
@@ -38,6 +44,9 @@ Hex.prototype.paint = function(h,xoffset,yoffset){
 		ctx.lineTo(nx-cw,ny);
 		ctx.stroke();
 	ctx.fill();
+	if (this.image != 0){
+		ctx.drawImage(this.image, nx-20, ny-27, 50*this.imagescale, 50*this.imagescale);	
+	}
 	//ctx.fillStyle = "red";
 	//ctx.fillText(this.x + " " + this.y,nx-10,ny);
 };

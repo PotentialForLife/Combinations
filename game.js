@@ -184,8 +184,8 @@ function cam_map(){
 	}
 	CAM_X_OFFSET = player.x-((CAM_WIDTH/2)+(1.5*cw));
 	CAM_Y_OFFSET = player.y-((CAM_HEIGHT/2));
-	for (x = -6;x < Math.floor((CAM_WIDTH/cw)/3)-1;++x){
-		for (y = NUMOFF;y<(CAM_HEIGHT/cw)-13;++y){
+	for (y = NUMOFF;y<(CAM_HEIGHT/cw)-13;++y){
+		for (x = -6;x < Math.floor((CAM_WIDTH/cw)/3)-1;++x){
 			map[LEFT+x][TOP+y].paint(player.height,CAM_X_OFFSET,CAM_Y_OFFSET);
 		}
 	}

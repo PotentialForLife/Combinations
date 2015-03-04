@@ -101,7 +101,7 @@ Hex.prototype.collision = function(x,y,player){
 				if (this.type == 'plant'){player.onPlant = true;}else{player.onPlant = false;}
 				if (this.type == 'water'){player.onWater = true;}else{player.onWater = false;}
 				if (this.type == 'mineral'){player.onMinerals = true;}else{player.onMinerals = false;}
-				if (this.atmosphere){control.PlayerEnergy = 100;}else{control.PlayerEenergy-=control.PlayerEnergyLossRate;}
+				if (this.atmosphere){control.PlayerEnergy = 100;}else{control.PlayerEnergy-=control.PlayerEnergyLossRate;}
 				if (this.type == 'control'){
 					player.inControl = true;
 					control.Water+=player.hasWater;

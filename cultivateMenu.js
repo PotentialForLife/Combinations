@@ -46,4 +46,5 @@ cultivateMenu.prototype.update = function(){
 	img.onload = function(){
 		ctx.drawImage(img, 0, 0);
 	};
+	hud.draw();
 };

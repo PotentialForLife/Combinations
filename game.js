@@ -32,6 +32,8 @@ function game(){
 	//control stuff
 	control = new Station(map[X_FLAG][Y_FLAG-2]);
 	//----------------------
+	
+	hud = new UI();
 };
 
 game.prototype.update = function(){
@@ -41,18 +43,7 @@ game.prototype.update = function(){
 	ctx.fillStyle = "black";
 	ctx.strokeStyle = "black";
 	player.draw(CAM_WIDTH/2,CAM_HEIGHT/2);
-	//ui.draw();
-	ctx.fillStyle = "white";
-	ctx.font = "20px Georgia";
-	ctx.fillText("Water : " + control.Water, 10,25);
-	ctx.fillText("Minerals : " + control.Minerals, 10,45);
-	ctx.fillText("Enzymes : " + control.Enzyme, 10,65);
-	ctx.fillText("Robo Water : " + player.hasWater, 10,85);
-	ctx.fillText("Robo Minerals : " + player.hasMinerals, 10,105);
-	ctx.fillText("exp : " + plant.exp + " / " + plant.expMax, 10, 125);
-	ctx.fillText("Fertilizer : " + control.fertilizer, 10,145);
-	ctx.fillText("Nitrates : " + control.nitrates, 10,165);
-	ctx.fillText("Growth Points : " + plant.growthPoints, 10,185);
+	hud.draw();
 	if(control.Growing){
 		for(var numTile = 0; numTile < growTiles.length; ++numTile){
 			if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y){
@@ -181,7 +172,7 @@ function keyUp(e){
 */
 function cam_map(){
 	ctx.fillStyle = "white";
-	ctx.fillRect(0,0,canvas.width,canvas.height);
+	ctx.fillRect(0,0,CAM_HEIGHT,600);
 	TOP = Y_FLAG;
 	LEFT = X_FLAG;
 	var NUMOFF;
@@ -194,7 +185,7 @@ function cam_map(){
 	CAM_X_OFFSET = player.x-((CAM_WIDTH/2)+(1.5*cw));
 	CAM_Y_OFFSET = player.y-((CAM_HEIGHT/2));
 	for (x = -6;x < Math.floor((CAM_WIDTH/cw)/3)-1;++x){
-		for (y = NUMOFF;y<(CAM_HEIGHT/cw)-8;++y){
+		for (y = NUMOFF;y<(CAM_HEIGHT/cw)-13;++y){
 			map[LEFT+x][TOP+y].paint(player.height,CAM_X_OFFSET,CAM_Y_OFFSET);
 		}
 	}

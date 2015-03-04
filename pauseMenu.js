@@ -5,6 +5,8 @@ function pauseMenu(){
 	img.onload = function(){
 		ctx.drawImage(img, 0, 0);
 	};
+	ctxh.clearRect(0,0,600,100);
+	hudLoaded = false;
 }
 
 pauseMenu.prototype.type = "pause";
@@ -25,6 +27,7 @@ pauseMenu.prototype.buttonPress = function(e){
 	}
 	if ((x >= 189) && (x <= 416) && (y >= 432) && (y <= 466)){ //back button
 		screenManager.splice((screenManager.length - 1), 1);
+		noHud = false;
 	}
 };
 

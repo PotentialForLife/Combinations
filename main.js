@@ -47,10 +47,12 @@ var plant;
 var growTiles = [];
 var growSourceTile;
 var control;
-var ui;
+var hud;
 
 document.addEventListener('keydown',keyDown,false);
 document.addEventListener('keyup',keyUp,false);
+
+
 
 c.onmousedown = function(e){
 	screenManager[screenManager.length - 1].buttonPress(e);

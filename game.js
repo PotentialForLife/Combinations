@@ -1,3 +1,6 @@
+var tut = false;
+var loadedGame;
+
 function game(){
 	//creation of the map
 	for (x = 1; x < 1000 ; x+=3){
@@ -35,7 +38,7 @@ function game(){
 	
 	hud = new UI();
 };
-
+var timer = 0;
 game.prototype.update = function(){
 	player.move();
 	find_player(map,player);
@@ -58,6 +61,18 @@ game.prototype.update = function(){
 			growTiles.shift();
 		}
 		control.Growing = false;
+	}
+	
+	if(!tut){
+		screenManager[screenManager.length] = new tutorial();
+		tut = true;
+	}
+	
+	if(timer == 30){
+		timer = 0; 
+		keybuf = false;
+		}else{
+			timer++;
 	}
 };
 
@@ -110,16 +125,42 @@ function keyDown(e){
             	if(player.onWater == true && player.capacity < player.capacityMax && keybuf == false && map[X_FLAG][Y_FLAG].resource > 0){
 					keybuf = true;
 					player.capacity+=10;
-					player.capacityMax+=10;
 					player.hasWater+=10;
 					map[X_FLAG][Y_FLAG].resource -= 10;
+					if (map[X_FLAG][Y_FLAG].resource < 10){
+						if (map[X_FLAG][Y_FLAG].hasPlant == true){
+							if(map[X_FLAG][Y_FLAG].color == "green"){
+								map[X_FLAG][Y_FLAG].image = hextreeimg;
+							}else{
+								map[X_FLAG][Y_FLAG].image = hexsproutimg;
+							}
+						}
+						else{
+							map[X_FLAG][Y_FLAG].color = TILE_COLORS[map[X_FLAG][Y_FLAG].h];
+							map[X_FLAG][Y_FLAG].realcolor = TILE_COLORS[map[X_FLAG][Y_FLAG].h];
+							map[X_FLAG][Y_FLAG].image = 0;
+						}	
+					}
 				}
 				if(player.onMinerals == true && player.capacity < player.capacityMax && keybuf == false && map[X_FLAG][Y_FLAG].resource > 0){
 					keybuf = true;
 					player.capacity+=10;
-					player.capacityMax+=10;
 					player.hasMinerals+=10;
 					map[X_FLAG][Y_FLAG].resource -= 10;
+					if (map[X_FLAG][Y_FLAG].resource < 10){
+						if (map[X_FLAG][Y_FLAG].hasPlant == true){
+							if(map[X_FLAG][Y_FLAG].color == "green"){
+								map[X_FLAG][Y_FLAG].image = hextreeimg;
+							}else{
+								map[X_FLAG][Y_FLAG].image = hexsproutimg;
+							}
+						}
+						else{
+							map[X_FLAG][Y_FLAG].color = TILE_COLORS[map[X_FLAG][Y_FLAG].h];
+							map[X_FLAG][Y_FLAG].realcolor = TILE_COLORS[map[X_FLAG][Y_FLAG].h];
+							map[X_FLAG][Y_FLAG].image = 0;
+						}
+					}
 				}
 				break;			
 			case 80:
@@ -171,7 +212,7 @@ function keyUp(e){
 * Controls viewable area of map
 */
 function cam_map(){
-	ctx.fillStyle = "white";
+	ctx.fillStyle = "black";
 	ctx.fillRect(0,0,CAM_HEIGHT,600);
 	TOP = Y_FLAG;
 	LEFT = X_FLAG;

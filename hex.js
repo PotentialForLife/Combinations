@@ -4,6 +4,7 @@ var hexiceimg = document.createElement("img");
 hexiceimg.src = "ice_crystal_icon copy.png";
 var hexmineralsimg = document.createElement("img");
 hexmineralsimg.src = "mineral_icon copy.png";
+
 function Hex(x,y,cw,color,h){
 	this.x = x;
 	this.y = y;
@@ -17,7 +18,7 @@ function Hex(x,y,cw,color,h){
 	this.cw = cw;
 	this.color = color;
 	this.realcolor = color;
-	this.bordercolor = "white";
+	this.bordercolor = "#FC9854";
 	this.imagescale = (.7+Math.random()*.3);
 }
 

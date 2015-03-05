@@ -29,7 +29,9 @@ mainMenu.prototype.buttonPress = function(e){
 		screenManager[screenManager.length] = new creditsMenu();
 	}
 	if ((x >= 189) && (x <= 416) && (y >= 473) && (y <= 505)){
-		console.log(quit);
+		screenManager.splice((screenManager.length - 1), 1);
+		ctx.fillStyle = "black";
+		ctx.fillRect(0,0,600,600);
 	}
 };
 

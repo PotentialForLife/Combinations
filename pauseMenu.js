@@ -18,14 +18,17 @@ pauseMenu.prototype.buttonPress = function(e){
 	y -= c.offsetTop;
 	
 	if ((x >= 189) && (x <= 416) && (y >= 241) && (y <= 273)){
+		button.play();
 		while (screenManager.length > 0)
 			screenManager.splice((screenManager.length - 1), 1);
 		screenManager[screenManager.length] = new mainMenu();
 	}
 	if ((x >= 189) && (x <= 416) && (y >= 336) && (y <= 369)){
+		button.play();
 		screenManager[screenManager.length] = new controlsMenu();
 	}
 	if ((x >= 189) && (x <= 416) && (y >= 432) && (y <= 466)){ //back button
+		button.play();
 		screenManager.splice((screenManager.length - 1), 1);
 		noHud = false;
 	}

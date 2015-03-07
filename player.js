@@ -15,6 +15,7 @@ var playeridleleftimg = document.createElement("img");
 playeridleleftimg.src = "robot_idle_left copy.png";
 var playeridleleftimg = document.createElement("img");
 playeridleleftimg.src = "robot_idle_left copy.png";
+
 function Player(){	
 }
 
@@ -47,6 +48,7 @@ Player.prototype.draw = function(x,y){
 	ctx.fillRect(dx,dy,4,4);
 	ctx.strokeStyle = "black";
 	ctx.strokeRect(dx,dy,4,4);
+	ctx.drawImage(playeridleleftimg, dx - 50 + 4, dy - 62.5 + 4, 100, 62.5);
 };
 
 Player.prototype.move = function(){

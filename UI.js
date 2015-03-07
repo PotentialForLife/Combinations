@@ -53,6 +53,7 @@ var enzymesimg = document.createElement("img");
 enzymesimg.src = "enzyme_UI copy.png";
 
 var hudLoaded = false;
+var energyStatus = 100;
 
 function UI(){}
 
@@ -60,28 +61,77 @@ UI.prototype.draw = function(){
 		ctxh.clearRect(0,0,600,100);
 		
 		//displays energy bar and its text
-		if(control.PlayerEnergy <= 0)
+		if(control.PlayerEnergy <= 0){
 			ctxh.drawImage(energyimg0, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 10 && control.PlayerEnergy > 0)
+			if(energyStatus == 10){
+				energyStatus = 0;
+				control.EnergyDown = true;
+			}
+		}
+		if(control.PlayerEnergy <= 10 && control.PlayerEnergy > 0){
 			ctxh.drawImage(energyimg10, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 20 && control.PlayerEnergy > 10)
+			if(energyStatus == 20){
+				energyStatus = 10;
+				control.EnergyDown = true;
+			}
+		}
+		if(control.PlayerEnergy <= 20 && control.PlayerEnergy > 10){
 			ctxh.drawImage(energyimg20, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 30 && control.PlayerEnergy > 20)
+			if(energyStatus == 30){
+				energyStatus = 20;
+				control.EnergyDown = true;
+			}
+		}
+		if(control.PlayerEnergy <= 30 && control.PlayerEnergy > 20){
 			ctxh.drawImage(energyimg30, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 40 && control.PlayerEnergy > 30)
+			if(energyStatus == 40){
+				energyStatus = 30;
+				control.EnergyDown = true;
+			}
+		}
+		if(control.PlayerEnergy <= 40 && control.PlayerEnergy > 30){
 			ctxh.drawImage(energyimg40, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 50 && control.PlayerEnergy > 40)
+			if(energyStatus == 50){
+				energyStatus = 40;
+				control.EnergyDown = true;
+			}
+		}
+		if(control.PlayerEnergy <= 50 && control.PlayerEnergy > 40){
 			ctxh.drawImage(energyimg50, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 60 && control.PlayerEnergy > 50)
+			if(energyStatus == 60){
+				energyStatus = 50;
+				control.EnergyDown = true;
+			}
+		}
+		if(control.PlayerEnergy <= 60 && control.PlayerEnergy > 50){
 			ctxh.drawImage(energyimg60, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 70 && control.PlayerEnergy > 60)
+			if(energyStatus == 70){
+				energyStatus = 60;
+			}
+		}
+		if(control.PlayerEnergy <= 70 && control.PlayerEnergy > 60){
 			ctxh.drawImage(energyimg70, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 80 && control.PlayerEnergy > 70)
+			if(energyStatus == 80){
+				energyStatus = 70;
+			}
+		}
+		if(control.PlayerEnergy <= 80 && control.PlayerEnergy > 70){
 			ctxh.drawImage(energyimg80, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 90 && control.PlayerEnergy > 80)
+			if(energyStatus == 90){
+				energyStatus = 80;
+			}
+		}
+		if(control.PlayerEnergy <= 90 && control.PlayerEnergy > 80){
 			ctxh.drawImage(energyimg90, -16, 2, 75, 75);
-		if(control.PlayerEnergy <= 100 && control.PlayerEnergy > 90)
+			if(energyStatus == 100){
+				energyStatus = 90;
+			}
+		}
+		if(control.PlayerEnergy <= 100 && control.PlayerEnergy > 90){
 			ctxh.drawImage(energyimg100, -16, 2, 75, 75);
+			if(energyStatus != 100)
+				energyStatus = 100;
+		}
 		
 		ctxh.fillStyle = "white";
 		ctxh.font = "20px Georgia";

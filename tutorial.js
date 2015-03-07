@@ -37,10 +37,12 @@ tutorial.prototype.buttonPress = function(e){
 	y -= c.offsetTop;
 	
 	if ((x >= 125) && (x <= 475) && (y >= 440) && (y <= 530)){ //continue button
+		button.play();
 		this.imgNum++;
 		//screenManager.splice((screenManager.length - 1), 1);
 	}
 	if ((x >= 509) && (x <= 551) && (y >= 54) && (y <= 88)){ //back
+		button.play();
 		screenManager.splice((screenManager.length - 1), 1);
 	}
 };

@@ -4,6 +4,8 @@ var hexiceimg = document.createElement("img");
 hexiceimg.src = "ice_crystal_icon copy.png";
 var hexmineralsimg = document.createElement("img");
 hexmineralsimg.src = "mineral_icon copy.png";
+var hexllamagod = document.createElement("img");
+hexllamagod.src = "Llama_GOD copy.png";
 
 function Hex(x,y,cw,color,h){
 	this.x = x;
@@ -108,7 +110,11 @@ Hex.prototype.collision = function(x,y,player){
 				//this.color = "white";
 				player.height = this.h;
 				console.log(this.type);
-				if (this.type == 'plant'){player.onPlant = true;}else{player.onPlant = false;}
+				if (this.type == 'plant'){
+					plantRustle.play();
+					player.onPlant = true;
+				}
+				else{player.onPlant = false;}
 				if (this.type == 'water'){player.onWater = true;}else{player.onWater = false;}
 				if (this.type == 'mineral'){player.onMinerals = true;}else{player.onMinerals = false;}
 				if (this.atmosphere){control.PlayerEnergy = 100;}else{control.PlayerEnergy-=control.PlayerEnergyLossRate;}

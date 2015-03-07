@@ -1,11 +1,13 @@
 var stationimg = document.createElement("img");
 stationimg.src = "command_thingy copy.png";
+
 function Station(hex){
 	hex.type = "control";
 	hex.color = "grey";
 	hex.realcolor = "grey";
 	hex.image = stationimg;
 };
+
 Station.prototype.Water =  500;
 Station.prototype.Minerals = 500;
 Station.prototype.Enzyme = 0;
@@ -23,3 +25,4 @@ Station.prototype.Growing = false;
 Station.prototype.HoldingGrow = false;
 Station.prototype.fertilizer = 0;
 Station.prototype.nitrates = 0;
+Station.prototype.EnergyDown = false;

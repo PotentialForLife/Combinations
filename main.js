@@ -1,8 +1,12 @@
 var ctx = document.querySelector("canvas").getContext("2d");
 var c = document.getElementById("canvas");
+
+//declaration of the screen manager. This is used as a stack and holds on the top the currently-active screen
 var screenManager = [];
 screenManager[0] = new mainMenu();
 var screenType = "main";
+
+//for loading screen
 var loaded = false;
 
 //Canvas stuff
@@ -11,6 +15,22 @@ var ctx = canvas.getContext("2d");
 var w = $("#canvas").width();
 var h = $("#canvas").height();
 var cw = 20;
+
+//load sounds
+var plantRustle = new Audio("PlantRustle.wav");
+var button = new Audio("Button Click.wav");
+var badButton = new Audio("Bad Button.wav");
+var bootUp = new Audio("Turn On.wav");
+var shutDown = new Audio("Turn Off.wav");
+var energyDown = new Audio("Boop.wav");
+var rootGrowing = new Audio("Roots Growing.wav");
+var lvlUpSound = new Audio("Level Up.wav");
+var moving = new Audio("Tire Over Dirt.wav");
+moving.addEventListener('ended', function() {
+	this.currentTime = 0;
+	this.play();
+}, false);
+var checkMovement = true;
 
 //global declarations
 var RIGHT_KEY = 68;
@@ -39,25 +59,30 @@ keyspressed[LEFT_KEY] = false;
 keyspressed[UP_KEY] = false;
 keyspressed[DOWN_KEY] = false;
 var keybuf = false;
-	
-//tile colors
-var TILE_COLORS = [ '#CC5200', '#E65C00', '#FF6600', '#FF7519', '#FF8533', '#FF9900', '#80FFFF', '#FFC299', '#FF0000'];
 
+//plant stuff
 var plant;
 var growTiles = [];
 var growSourceTile;
+
+//control station
 var control;
+
+//the HUD
 var hud;
+
+//the arrow that directs players back to the station
+var arrow;
 
 document.addEventListener('keydown',keyDown,false);
 document.addEventListener('keyup',keyUp,false);
 
-
-
+//on a mousedown event, calls the "buttonPress" function of the screen manager's active screen (the last one)
 c.onmousedown = function(e){
 	screenManager[screenManager.length - 1].buttonPress(e);
 };
 
+//redraws the active screen
 function redraw(){
 	screenManager[screenManager.length - 1].update();
 };

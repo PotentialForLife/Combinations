@@ -1,5 +1,12 @@
+/*Credits Menu Class
+ * Coded by Lauren Cunningham
+ * This is the class for the credits menu screen of the game
+ */
+
+//screen graphic
 var img = document.createElement("img");
 
+//creates a credits menu object. These are put into the screen manager declared in "main.js"
 function creditsMenu(){
 	img.src = "credits_menu copy.png";
 	img.onload = function(){
@@ -9,6 +16,7 @@ function creditsMenu(){
 
 creditsMenu.prototype.type = "credits";
 
+//handles the button on the credits menu graphic (handles mouse clicks)
 creditsMenu.prototype.buttonPress = function(e){
 	var x = e.clientX;
 	var y = e.clientY;
@@ -20,6 +28,7 @@ creditsMenu.prototype.buttonPress = function(e){
 	}
 };
 
+//updates the credits menu screen
 creditsMenu.prototype.update = function(){
 	img.src = "credits_menu copy.png";
 	img.onload = function(){

@@ -66,19 +66,21 @@ function sqrSeed(base, next, seeds, distance, map){
 	else{
 		var row = Math.floor ((Math.random() * map.length));
 		var col = Math.floor ((Math.random() * map[0].length));
-		while(!(map[row][col].color == TILE_COLORS[base] && (row < map.length*distance || row > map.length-map.length*distance || col < map[0].length*distance || col > map[0].length-map[0].length*distance))){
+		if(base == -1){
+			height = true;
+		}
+		else{
+			height = (map[row][col].color == TILE_COLORS[base]);
+		}
+		while(!(height && (row < map.length*distance || row > map.length-map.length*distance || col < map[0].length*distance || col > map[0].length-map[0].length*distance))){
 			row = Math.floor ((Math.random() * map.length));
 			col = Math.floor ((Math.random() * map[0].length));
 		}
 		var h = map[row][col].h; 
 		map[row][col].color = TILE_COLORS[next];
 		map[row][col].realcolor = TILE_COLORS[next];
-		if (next == 5 || next == 6){
-			map[row][col].h = h;
-			if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
-		} else{
-			map[row][col].h = next;
-		}
+		map[row][col].h = h;
+		map[row][col].image = hexllamagod;
 	}
 }
 
@@ -112,19 +114,21 @@ function reverseSqrSeed(base, next, seeds, distance, map){
 	else{
 		var row = Math.floor ((Math.random() * map.length));
 		var col = Math.floor ((Math.random() * map[0].length));
-		while(!(map[row][col].color == TILE_COLORS[base] && (row < map.length*distance || row > map.length-map.length*distance || col < map[0].length*distance || col > map[0].length-map[0].length*distance))){
+		if(base == -1){
+			height = true;
+		}
+		else{
+			height = (map[row][col].color == TILE_COLORS[base]);
+		}
+		while(!(height && !(row < map.length*distance || row > map.length-map.length*distance || col < map[0].length*distance || col > map[0].length-map[0].length*distance))){
 			row = Math.floor ((Math.random() * map.length));
 			col = Math.floor ((Math.random() * map[0].length));
 		}
 		var h = map[row][col].h; 
 		map[row][col].color = TILE_COLORS[next];
 		map[row][col].realcolor = TILE_COLORS[next];
-		if (next == 5 || next == 6){
-			map[row][col].h = h;
-			if (next == 5){map[row][col].type = "mineral";map[row][col].image = hexmineralsimg;}else{map[row][col].type = "water"; map[row][col].image = hexiceimg;}
-		} else{
-			map[row][col].h = next;
-		}
+		map[row][col].h = h;
+		map[row][col].image = hexllamagod;
 	}
 }
 

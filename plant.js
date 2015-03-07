@@ -42,6 +42,7 @@ Plant.prototype.exp = 0;
 Plant.prototype.expMax = 100;
 Plant.prototype.growthPoints = 0;
 Plant.prototype.numRoots = 0;
+Plant.prototype.numPlants = 1;
 
 function PlantNode(nodeTile, nodeType){
 	console.log("making PlantNode");
@@ -72,6 +73,7 @@ PlantNode.prototype.children = new Array(); //could reference neighboring tiles 
  * @param {Object} tile: tile on which new root is created
  */
 Plant.prototype.grow = function(parentNode, tile){
+	rootGrowing.play();
 	if(parentNode.type == plantEnum.ROOT){
 		--this.growthPoints;
 		parentNode.type = plantEnum.TREE;
@@ -81,6 +83,7 @@ Plant.prototype.grow = function(parentNode, tile){
 		newRoot.parent = parentNode;
 		parentNode.children.push(newRoot);
 		tile.plant = newRoot;
+		++this.numPlants;
 	}
 	else if(parentNode.type == plantEnum.TREE){
 		--control.Enzyme;
@@ -89,6 +92,11 @@ Plant.prototype.grow = function(parentNode, tile){
 		parentNode.children.push(newRoot);
 		tile.plant = newRoot;
 		++this.numRoots;
+		++this.numPlants;
+	}
+	if(this.numPlants == Math.floor(xlength*ylength*.00001)){
+		console.log(true);
+		//win
 	}
 };
 
@@ -110,6 +118,7 @@ Plant.prototype.lvlUp = function(){
 	this.expMax = Math.floor(this.expMax * 1.05);
 	this.exp = extraExp;
 	++this.lvl;
+	lvlUpSound.play();
 };
 
 /**

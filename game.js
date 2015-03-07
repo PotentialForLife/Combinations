@@ -1,11 +1,13 @@
 var tut = false;
 var loadedGame;
+var xlength = 1000;
+var ylength = 1000;
 
 function game(){
 	//creation of the map
-	for (x = 1; x < 1000 ; x+=3){
+	for (x = 1; x < xlength ; x+=3){
 		var col = new Array();
-		for (y = 1; y < 1000; y++){
+		for (y = 1; y < ylength; y++){
 			var newHex = new Hex(x,y,cw,TILE_COLORS[0],0);
 			col.push(newHex);
 		}
@@ -24,6 +26,7 @@ function game(){
 	build(2, 6, 0, 100, 1, map);
 	build(2, 5, 0, 150, 1, map);
 	sqrSeed(-1, 7, 1000000, .03, map);
+	reverseSqrSeed(-1, 8, 1, .49, map);
 	build(-1, 7, 25, 0, 1, map);
 	//build(4, 8, 0,1 , .3, map);
 	//----------------------
@@ -37,7 +40,10 @@ function game(){
 	//----------------------
 	
 	hud = new UI();
+	
+	arrow = new arrow();
 };
+
 var timer = 0;
 game.prototype.update = function(){
 	player.move();
@@ -47,6 +53,7 @@ game.prototype.update = function(){
 	ctx.strokeStyle = "black";
 	player.draw(CAM_WIDTH/2,CAM_HEIGHT/2);
 	hud.draw();
+	arrow.draw();
 	if(control.Growing){
 		for(var numTile = 0; numTile < growTiles.length; ++numTile){
 			if(map[X_FLAG][Y_FLAG].x == growTiles[numTile].x && map[X_FLAG][Y_FLAG].y == growTiles[numTile].y){
@@ -71,8 +78,27 @@ game.prototype.update = function(){
 	if(timer == 30){
 		timer = 0; 
 		keybuf = false;
-		}else{
-			timer++;
+	}
+	else{
+		timer++;
+	}
+	
+	if(control.EnergyDown){
+		control.EnergyDown = false;
+		energyDown.play();
+	}
+	
+	if(checkMovement){
+		if(player.right || player.left || player.up || player.down){
+			moving.play();
+			checkMovement = false;
+		}
+	}
+	if(!checkMovement){
+		if(!player.right && !player.left && !player.up && !player.down){
+			moving.pause();
+			checkMovement = true;
+		}
 	}
 };
 
@@ -119,6 +145,7 @@ function keyDown(e){
 					}
 				}
 				if(player.inControl){
+					bootUp.play();
 					screenManager[screenManager.length] = new stationMenu();
 					break;
 				}
